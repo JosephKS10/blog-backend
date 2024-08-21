@@ -4,7 +4,7 @@ const Post = require('../models/Post');
 const { uploadPostImage } = require('../config/cloudinary');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middlewares/authMiddleware'); 
+const authMiddleware = require('../middlewares/authMiddleware');
 const mongoose = require('mongoose');
 
 
