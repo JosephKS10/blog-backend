@@ -4,7 +4,6 @@ const Post = require('../models/Post');
 const { uploadPostImage } = require('../config/cloudinary');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middlewares/authMiddleware');
 const mongoose = require('mongoose');
 
 
@@ -157,7 +156,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-router.get('/blogs/user', authMiddleware, async (req, res) => {
+router.get('/blogs/user', verifyToken, async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(400).json({ message: 'Invalid user ID' });
