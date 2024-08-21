@@ -4,16 +4,35 @@ const dotenv = require('dotenv');
 const cors = require('cors'); 
 const postsRouter = require('./routes/Posts');
 const authRouter = require('./routes/Auth'); 
-const authMiddleware = require('./middlewares/authMiddleware'); 
 const commentsRouter = require('./routes/Comments');
 
 dotenv.config();
+
+const authMiddleware = (req, res, next) => {
+  const jwt = require('jsonwebtoken');
+
+  const token = req.headers.authorization?.split(' ')[1]; 
+  if (!token) return res.status(401).json({ message: 'Access denied, token missing' });
+
+  try {
+    let decoded = jwt.verify(token, process.env.JWT_SECRET); 
+    req.userId = decoded.userId; 
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+};
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+
 
 // Connect to MongoDB Atlas
 if (mongoose.connection.readyState === 0) {
