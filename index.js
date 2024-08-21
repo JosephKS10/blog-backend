@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors'); 
 const postsRouter = require('./routes/Posts');
 const authRouter = require('./routes/Auth'); 
-const authMiddleware = require('./middlewares/AuthMiddleware'); 
+const authMiddleware = require('./middlewares/authMiddleware'); 
 const commentsRouter = require('./routes/Comments');
 
 dotenv.config();
